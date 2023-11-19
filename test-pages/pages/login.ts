@@ -1,21 +1,26 @@
-import { BasePage } from "../basePage";
 import { expect } from "playwright/test";
+import { BasePageNotLogged } from "../basePageNotLogged";
 
-type LoginInputType = "password" | "id";
+export enum LoginInputType {
+  PASSWORD = "password",
+  ID = "id",
+}
 
 enum LoginValidationColors {
   RED = "rgb(212, 32, 39)",
   GREEN = "rgb(4, 180, 62)",
 }
 
-export class LoginPage extends BasePage {
+export class LoginPage extends BasePageNotLogged {
   /* locators */
-  loginContainer = {
+  protected readonly loginContainer = {
     idInput: this.page.locator('[data-testid="login-input"]'),
     passwordInput: this.page.locator('[data-testid="password-input"]'),
     submitButton: this.page.locator('[data-testid="login-button"]'),
-    errorAtInput: (type: LoginInputType) =>
-      this.page.locator(`[data-testid="error-login-${type}"]`),
+    idErrorMessage: this.page.locator('[data-testid="error-login-id"]'),
+    passwordErrorMessage: this.page.locator(
+      '[data-testid="error-login-password"]'
+    ),
   };
 
   /* functions */
@@ -30,23 +35,23 @@ export class LoginPage extends BasePage {
   }
 
   async loginAs(id: string, password: string) {
-    await this.typeInInput("id", id);
-    await this.typeInInput("password", password);
+    await this.typeInInput(LoginInputType.ID, id);
+    await this.typeInInput(LoginInputType.PASSWORD, password);
     await this.loginContainer.submitButton.click();
   }
 
   /* asserations */
   async inputShouldHaveErrorMessage(type: LoginInputType, message: string) {
-    await expect(this.loginContainer.errorAtInput(type)).toBeVisible();
+    await expect(this.loginContainer[`${type}ErrorMessage`]).toBeVisible();
     await this.inputsBorderShouldHaveColor(type, LoginValidationColors.RED);
     await this.errorMessageShouldHaveColor(type, LoginValidationColors.RED);
     await expect
-      .soft(this.loginContainer.errorAtInput(type))
+      .soft(this.loginContainer[`${type}ErrorMessage`])
       .toHaveText(message);
   }
 
   async inputShouldNotHaveErrorMessage(type: LoginInputType) {
-    await expect(this.loginContainer.errorAtInput(type)).not.toBeVisible();
+    await expect(this.loginContainer[`${type}ErrorMessage`]).not.toBeVisible();
     await this.inputsBorderShouldHaveColor(type, LoginValidationColors.GREEN);
   }
 
@@ -55,7 +60,7 @@ export class LoginPage extends BasePage {
     color: LoginValidationColors
   ) {
     await expect
-      .soft(this.loginContainer.errorAtInput(type))
+      .soft(this.loginContainer[`${type}ErrorMessage`])
       .toHaveCSS("border-color", color);
   }
 

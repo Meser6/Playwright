@@ -3,7 +3,7 @@ import { LoginPage } from "./pages/login";
 import { PulpitPage } from "./pages/pulpit";
 
 export class PageMenager {
-  private readonly page: Page;
+  readonly page: Page;
   readonly loginPage: LoginPage;
   readonly pulpitPage: PulpitPage;
 

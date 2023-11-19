@@ -1,3 +1,3 @@
-import { BasePage } from "../basePage";
+import { BasePageLogged } from "../basePageLogged";
 
-export class PulpitPage extends BasePage {}
+export class PulpitPage extends BasePageLogged {}

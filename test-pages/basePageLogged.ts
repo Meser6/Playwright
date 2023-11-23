@@ -32,6 +32,12 @@ export class BasePageLogged extends BasePage {
   };
 
   /* functions */
+
+  /**
+   * Fuctnion will open category (and subcategory if you choose pulpit) at menu
+   * @param category - main categories
+   * @param subCategory - available only if category is 'pulpit'
+   */
   async chooseCategoryAtMenu(
     category: MenuCategory,
     subCategory?: PulpitSubcategory

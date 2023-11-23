@@ -34,6 +34,11 @@ export class LoginPage extends BasePageNotLogged {
     await this.loginContainer.submitButton.click();
   }
 
+  /**
+   * Functiony to login in hooks before tests. Use data from .env
+   * @param id - proscess.env.ID
+   * @param password - proscess.env.PASSWORD
+   */
   async loginAs(id: string, password: string) {
     await this.typeInInput(LoginInputType.ID, id);
     await this.typeInInput(LoginInputType.PASSWORD, password);
@@ -43,7 +48,7 @@ export class LoginPage extends BasePageNotLogged {
   /* asserations */
   async inputShouldHaveErrorMessage(type: LoginInputType, message: string) {
     await expect(this.loginContainer[`${type}ErrorMessage`]).toBeVisible();
-    await this.inputsBorderShouldHaveColor(type, LoginValidationColors.RED);
+    await this.inputBorderShouldHaveColor(type, LoginValidationColors.RED);
     await this.errorMessageShouldHaveColor(type, LoginValidationColors.RED);
     await expect
       .soft(this.loginContainer[`${type}ErrorMessage`])
@@ -52,7 +57,7 @@ export class LoginPage extends BasePageNotLogged {
 
   async inputShouldNotHaveErrorMessage(type: LoginInputType) {
     await expect(this.loginContainer[`${type}ErrorMessage`]).not.toBeVisible();
-    await this.inputsBorderShouldHaveColor(type, LoginValidationColors.GREEN);
+    await this.inputBorderShouldHaveColor(type, LoginValidationColors.GREEN);
   }
 
   private async errorMessageShouldHaveColor(
@@ -64,7 +69,7 @@ export class LoginPage extends BasePageNotLogged {
       .toHaveCSS("border-color", color);
   }
 
-  private async inputsBorderShouldHaveColor(
+  private async inputBorderShouldHaveColor(
     type: LoginInputType,
     color: LoginValidationColors
   ) {

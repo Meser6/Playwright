@@ -7,12 +7,12 @@ type PulpitSubcategory = keyof typeof BasePageLogged.prototype.menu.pulpit;
 export class BasePageLogged extends BasePage {
   /* locators */
   protected readonly header = {
-    logoutButton: this.page.locator('[data-testid="logout-button"]'),
+    logoutButton: this.page.getByTestId("logout-button"),
   };
 
   protected readonly bodyHeader = {
-    userName: this.page.locator('[data-testid="user-name"]'),
-    messages: this.page.locator('[data-testid="message-text"]'),
+    userName: this.page.getByTestId("user-name"),
+    messages: this.page.getByTestId("message-text"),
     timer: this.page.locator("#session_time"),
   };
 

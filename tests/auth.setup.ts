@@ -1,11 +1,12 @@
 import { test as setup } from "@playwright/test";
 import { PageMenager } from "../test-pages/pagesMenager";
+import { pages } from "../test-data/pages.data";
 
 let pm: PageMenager;
 
 setup.beforeEach(async ({ page }) => {
   pm = new PageMenager(page);
-  await page.goto("/");
+  await page.goto(pages.main);
 });
 
 /**

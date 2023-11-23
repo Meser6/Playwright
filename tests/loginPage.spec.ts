@@ -1,13 +1,14 @@
 import { test } from "@playwright/test";
 import { PageMenager } from "../test-pages/pagesMenager";
 import { LoginInputType } from "../test-pages/pages/login";
+import { pages } from "../test-data/pages.data";
 
 let pm: PageMenager;
 
 test.use({ storageState: "./.auth/notAuthSession.json" });
 test.beforeEach(async ({ page }) => {
   pm = new PageMenager(page);
-  await page.goto("/");
+  await page.goto(pages.main);
 });
 
 test.describe("Correct login", () => {

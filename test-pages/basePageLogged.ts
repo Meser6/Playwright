@@ -6,11 +6,11 @@ type PulpitSubcategory = keyof typeof BasePageLogged.prototype.menu.pulpit;
 
 export class BasePageLogged extends BasePage {
   /* locators */
-  protected readonly header = {
+  readonly header = {
     logoutButton: this.page.getByTestId("logout-button"),
   };
 
-  protected readonly bodyHeader = {
+  readonly bodyHeader = {
     userName: this.page.getByTestId("user-name"),
     messages: this.page.getByTestId("message-text"),
     timer: this.page.locator("#session_time"),
@@ -34,9 +34,9 @@ export class BasePageLogged extends BasePage {
   /* functions */
 
   /**
-   * Fuctnion will open category (and subcategory if you choose pulpit) at menu
+   * Fuction will open category (and subcategory if you choose pulpit) at menu
    * @param category - main categories
-   * @param subCategory - available only if category is 'pulpit'
+   * @optinal @param subCategory - available only if category is 'pulpit'
    */
   async chooseCategoryAtMenu(
     category: MenuCategory,

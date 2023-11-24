@@ -1,6 +1,6 @@
 import { Page } from "playwright-core";
-import { LoginPage } from "./pages/login";
-import { PulpitPage } from "./pages/pulpit";
+import { LoginPage } from "./pages/loginPage";
+import { PulpitPage } from "./pages/pulpitPage";
 
 export class PageMenager {
   readonly page: Page;

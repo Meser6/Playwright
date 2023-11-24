@@ -32,7 +32,6 @@ export class BasePageLogged extends BasePage {
   };
 
   /* functions */
-
   /**
    * Fuction will open category (and subcategory if you choose pulpit) at menu
    * @param category - main categories

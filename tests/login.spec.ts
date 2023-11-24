@@ -1,6 +1,5 @@
 import { test } from "@playwright/test";
 import { PageMenager } from "../test-pages/pagesMenager";
-// import { LoginInputTypes } from "../test-pages/pages/login";
 import { pages } from "../test-data/pages.data";
 
 let pm: PageMenager;
@@ -96,7 +95,6 @@ test.describe("Login page", () => {
       pm.loginPage.loginContainer.password.errorMessage,
       errorMessage
     );
-
     await pm.loginPage.submitButtonShouldBeDisabled();
   });
 });

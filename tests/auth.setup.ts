@@ -15,7 +15,7 @@ setup.beforeEach(async ({ page }) => {
  * To login as other user use - test.use({ storageState: "./.auth/*.json" }); - before test.
  */
 
-setup("Login as normal user", async ({ page }) => {
+setup("Logged as normal user", async ({ page }) => {
   await pm.loginPage.setupLoginAs(process.env.ID!, process.env.PASSWORD!);
   await pm.pulpitPage.logoutButtonShouldBeVisible();
   await page.context().storageState({ path: "./.auth/authSession.json" });

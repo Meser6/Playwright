@@ -1,11 +1,5 @@
 import { expect } from "playwright/test";
-// import { FormValidationColors } from "../../test-data/colors.data";
 import { BasePageNotLogged } from "../basePageNotLogged";
-
-// export enum LoginInputTypes {
-//   PASSWORD = "password",
-//   ID = "id",
-// }
 
 export class LoginPage extends BasePageNotLogged {
   /* locators */
@@ -22,7 +16,6 @@ export class LoginPage extends BasePageNotLogged {
   };
 
   /* functions */
-
   async clickSubmitButton() {
     await this.loginContainer.submitButton.click();
   }
@@ -38,7 +31,6 @@ export class LoginPage extends BasePageNotLogged {
   }
 
   /* asserations */
-
   async submitButtonShouldBeDisabled() {
     await expect(this.loginContainer.submitButton).toBeDisabled();
   }

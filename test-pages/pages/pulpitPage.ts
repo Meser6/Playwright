@@ -1,7 +1,10 @@
 import { BasePageLogged } from "../basePageLogged";
 import { expect } from "@playwright/test";
 
-type Payees = "Jan Demobankowy" | "Chuck Demobankowy" | "Michael Scott";
+export type AvailablePayees =
+  | "Jan Demobankowy"
+  | "Chuck Demobankowy"
+  | "Michael Scott";
 
 export class PulpitPage extends BasePageLogged {
   /* locators */
@@ -29,6 +32,8 @@ export class PulpitPage extends BasePageLogged {
     submitTransferButton: this.page.locator("button", { hasText: "wykonaj" }),
   };
 
+  readonly confirmModalWindow = this.page.locator("div.ui-dialog");
+
   /* functions */
   async getCurrentAccountBalance() {
     return Promise.all([
@@ -39,7 +44,7 @@ export class PulpitPage extends BasePageLogged {
     });
   }
 
-  async doTransfer(peyee: Payees, amount: number, title: string) {
+  async doTransfer(peyee: AvailablePayees, amount: number, title: string) {
     await this.quickTransferContainer.payee.selector.selectOption({
       label: peyee,
     }),
@@ -70,5 +75,16 @@ export class PulpitPage extends BasePageLogged {
   ) {
     const balanceAfter = await this.getCurrentAccountBalance();
     expect(balanceAfter).toEqual(balanceBefore - transferAmout);
+  }
+
+  async confirmModalWindowShouldBeVisible() {
+    expect(this.confirmModalWindow).toBeVisible();
+  }
+
+  async confirmModalWindowShouldContainsTexts(...texts: string[]) {
+    const textsAtModalWindow = await this.confirmModalWindow.allTextContents();
+    for (const text of texts) {
+      expect(textsAtModalWindow[0]).toContain(text);
+    }
   }
 }

@@ -3,7 +3,7 @@ import { BasePageNotLogged } from "../basePageNotLogged";
 
 export class LoginPage extends BasePageNotLogged {
   /* locators */
-  readonly loginContainer = {
+  readonly login = {
     id: {
       input: this.page.getByTestId("login-input"),
       errorMessage: this.page.getByTestId("error-login-id"),
@@ -17,7 +17,7 @@ export class LoginPage extends BasePageNotLogged {
 
   /* functions */
   async clickSubmitButton() {
-    await this.loginContainer.submitButton.click();
+    await this.login.submitButton.click();
   }
   /**
    * Function to login in auth.setup. Use data from .env
@@ -25,17 +25,22 @@ export class LoginPage extends BasePageNotLogged {
    * @param password - proscess.env.PASSWORD
    */
   async setupLoginAs(id: string, password: string) {
-    await this.loginContainer.id.input.fill(id);
-    await this.loginContainer.password.input.fill(password);
-    await this.loginContainer.submitButton.click();
+    await this.login.id.input.fill(id);
+    await this.login.password.input.fill(password);
+    await this.login.submitButton.click();
+  }
+
+  async userShouldBeNotLogged() {
+    await expect(this.login.id.input).toBeVisible();
+    await expect(this.login.password.input).toBeVisible();
   }
 
   /* asserations */
   async submitButtonShouldBeDisabled() {
-    await expect(this.loginContainer.submitButton).toBeDisabled();
+    await expect(this.login.submitButton).toBeDisabled();
   }
 
   async submitButtonShouldNotBeDisabled() {
-    await expect(this.loginContainer.submitButton).not.toBeDisabled();
+    await expect(this.login.submitButton).not.toBeDisabled();
   }
 }

@@ -5,6 +5,8 @@ import { FormValidationColors } from "../test-data/colors.data";
 export class BasePage {
   constructor(readonly page: Page) {}
   /* functions */
+
+  /** Enters the input, sends the value, and exits the input */
   async typeInInput(inputElement: Locator, value: string) {
     await inputElement.click();
     if (value) await inputElement.fill(value);
@@ -12,6 +14,8 @@ export class BasePage {
   }
 
   /* asserations */
+
+  /** Will check the message and its color */
   async inputShouldHaveErrorMessage(
     errorMessageElement: Locator,
     message: string
@@ -24,6 +28,7 @@ export class BasePage {
     await expect.soft(errorMessageElement).toHaveText(message);
   }
 
+  /** Will check if the message is invisible and inputs border color */
   async inputShouldNotHaveErrorMessage(
     input: Locator,
     errorMessageElement: Locator

@@ -58,10 +58,20 @@ export class BasePageLogged extends BasePage {
     return Math.floor(Number(minutes) * 60 + Number(seconds));
   }
 
+  async logoutButtonShouldBeVisible() {
+    await expect(this.header.logoutButton).toBeVisible();
+  }
+
+  async logout() {
+    await this.header.logoutButton.click();
+  }
+
   /* asserations */
   async userShouldBeLogged() {
     await expect(this.header.logoutButton).toBeVisible();
     await expect(this.bodyHeader.userName).toBeVisible();
+
+    await this.atCookiesShouldBeCookieAboutCorrectLogin(true);
   }
 
   async currentTimeToSessionEndShuldBeLessThenBefore(

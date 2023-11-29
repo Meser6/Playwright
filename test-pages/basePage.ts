@@ -50,4 +50,13 @@ export class BasePage {
   ) {
     await expect.soft(input).toHaveCSS("border-color", color);
   }
+
+  async atCookiesShouldBeCookieAboutCorrectLogin(shouldBe: boolean) {
+    const cookies = await this.page.context().cookies();
+    const atCookiesIsCookieAboutCorrectLogin = cookies.some(
+      (cookie) => cookie.name === "isLogged" && cookie.value === "true"
+    );
+
+    expect(atCookiesIsCookieAboutCorrectLogin).toBe(shouldBe);
+  }
 }

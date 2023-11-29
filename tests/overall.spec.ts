@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
   await pm.pulpitPage.chooseCategoryAtMenu("pulpit");
 });
 
-test.describe.only("Session timer", () => {
+test.describe("Session timer", () => {
   test("Time passing in the timer", async () => {
     const timeBefore = await pm.pulpitPage.getCurrentTimeToSessnionEnd();
     const waitingTime = 2;
@@ -29,5 +29,13 @@ test.describe.only("Session timer", () => {
     await pm.pulpitPage.chooseCategoryAtMenu("privaccounts");
 
     await pm.privateAccount.currentTimeToSessionEndShuldBe(10, 0);
+  });
+});
+
+test.describe("Logout", () => {
+  test("Logout mechanism", async () => {
+    await pm.pulpitPage.logout();
+
+    await pm.loginPage.userShouldBeNotLogged();
   });
 });

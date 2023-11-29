@@ -33,6 +33,8 @@ export class LoginPage extends BasePageNotLogged {
   async userShouldBeNotLogged() {
     await expect(this.login.id.input).toBeVisible();
     await expect(this.login.password.input).toBeVisible();
+
+    await this.atCookiesShouldBeCookieAboutCorrectLogin(false);
   }
 
   /* asserations */

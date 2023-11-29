@@ -15,25 +15,32 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Pulpit page", () => {
-  test("Fast transfer", async () => {
-    const payee: AvailablePayees = "Jan Demobankowy";
-    const transferAmount = 159.2;
-    const title = "TITLE";
-    const balanceBefore = await pm.pulpitPage.getCurrentAccountBalance();
+  test.describe("Quick transfer", () => {
+    test("Doing quick transfer", async () => {
+      const payee: AvailablePayees = "Jan Demobankowy";
+      const transferAmount = 159.2;
+      const title = "TITLE";
+      const balanceBefore = await pm.pulpitPage.getCurrentAccountBalance();
 
-    await pm.pulpitPage.doQuickTransfer(payee, transferAmount, title);
+      await pm.pulpitPage.doQuickTransfer(payee, transferAmount, title);
 
-    await pm.pulpitPage.currentBalanceShouldBeSmallerThenBeforeTransfer(
-      transferAmount,
-      balanceBefore
-    );
-    await pm.pulpitPage.confirmModalWindowShouldBeVisible();
-    await pm.pulpitPage.confirmModalWindowShouldContainsTexts(
-      payee,
-      String(transferAmount).replace(".", ","),
-      title,
-      "Przelew wykonany"
-    );
+      await pm.pulpitPage.currentBalanceShouldBeSmallerThenBeforeTransfer(
+        transferAmount,
+        balanceBefore
+      );
+      await pm.pulpitPage.confirmModalWindowShouldBeVisible();
+      await pm.pulpitPage.confirmModalWindowShouldContainsTexts(
+        payee,
+        String(transferAmount).replace(".", ","),
+        title,
+        "Przelew wykonany"
+      );
+    });
+    test("Tooltip", async () => {
+      await pm.pulpitPage.showQuickTransferTooltip();
+
+      await pm.pulpitPage.tooltipWindowShouldBeVisible();
+    });
   });
   test("Phone Recharge", async () => {
     const reciver: AvailablePhoneNumbers = "500 xxx xxx";
@@ -50,12 +57,11 @@ test.describe("Pulpit page", () => {
     );
   });
 
-  test.skip("Finance manager", async () => {
+  test("Finance manager", async () => {
     const monthAmount = 6;
 
     await pm.pulpitPage.chooseFinanceMenagerTime(monthAmount);
 
     await pm.pulpitPage.atChartShouldBeXCircles(monthAmount);
-    //TODO .hover() does not make the line appear.
   });
 });

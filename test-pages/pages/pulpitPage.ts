@@ -19,7 +19,7 @@ export class PulpitPage extends BasePageLogged {
     decimalValue: this.page.locator("#decimal_value"),
   };
 
-  readonly quickTransferContainer = {
+  readonly quickTransfer = {
     payee: {
       selector: this.page.locator('select[id*="transfer_receive"]'),
       choosedValue: this.page
@@ -34,6 +34,10 @@ export class PulpitPage extends BasePageLogged {
     title: {
       input: this.page.locator('[id*="transfer_title"]'),
       errorMessage: this.page.getByTestId("error-widget-1-transfer-title"),
+    },
+    tooltip: {
+      icon: this.page.locator(".widget-info"),
+      modal: this.page.locator("#ui-tooltip-0"),
     },
     submitButton: this.page.locator("button", { hasText: "wykonaj" }),
   };
@@ -78,27 +82,28 @@ export class PulpitPage extends BasePageLogged {
   }
 
   async doQuickTransfer(peyee: AvailablePayees, amount: number, title: string) {
-    await this.quickTransferContainer.payee.selector.selectOption({
+    await this.quickTransfer.payee.selector.selectOption({
       label: peyee,
     });
     await this.inputShouldNotHaveErrorMessage(
-      this.quickTransferContainer.payee.choosedValue,
-      this.quickTransferContainer.payee.errorMessage
+      this.quickTransfer.payee.choosedValue,
+      this.quickTransfer.payee.errorMessage
     );
-    await this.typeInInput(
-      this.quickTransferContainer.amount.input,
-      String(amount)
-    );
+    await this.typeInInput(this.quickTransfer.amount.input, String(amount));
     await this.inputShouldNotHaveErrorMessage(
-      this.quickTransferContainer.amount.input,
-      this.quickTransferContainer.amount.errorMessage
+      this.quickTransfer.amount.input,
+      this.quickTransfer.amount.errorMessage
     );
-    await this.typeInInput(this.quickTransferContainer.title.input, title);
+    await this.typeInInput(this.quickTransfer.title.input, title);
     await this.inputShouldNotHaveErrorMessage(
-      this.quickTransferContainer.title.input,
-      this.quickTransferContainer.title.errorMessage
+      this.quickTransfer.title.input,
+      this.quickTransfer.title.errorMessage
     );
-    await this.quickTransferContainer.submitButton.click();
+    await this.quickTransfer.submitButton.click();
+  }
+
+  async showQuickTransferTooltip() {
+    await this.quickTransfer.tooltip.icon.hover({ force: true });
   }
 
   async rechargePhone(
@@ -128,13 +133,10 @@ export class PulpitPage extends BasePageLogged {
   }
 
   async chooseFinanceMenagerTime(monthAmount: 1 | 3 | 6 | 12) {
-    const chart = await this.financeMenager.chart.elementHandle();
     await this.financeMenager.timeSelector.selectOption({
       value: String(monthAmount),
     });
     await this.page.waitForTimeout(1000);
-    // await chart!.waitForElementState("stable");
-    // await chart!.waitForElementState('stable')
   }
 
   /* asserations */
@@ -147,7 +149,7 @@ export class PulpitPage extends BasePageLogged {
   }
 
   async confirmModalWindowShouldBeVisible() {
-    expect(this.confirmModalWindow).toBeVisible();
+    await expect(this.confirmModalWindow).toBeVisible();
   }
 
   async confirmModalWindowShouldContainsTexts(...texts: string[]) {
@@ -160,6 +162,12 @@ export class PulpitPage extends BasePageLogged {
   async atChartShouldBeXCircles(circlesAmount: number) {
     await this.financeMenager.chart.hover({ force: true });
 
-    expect(this.financeMenager.lineCircles).toHaveCount(0);
+    await expect(this.financeMenager.lineCircles).toHaveCount(circlesAmount);
+  }
+
+  async tooltipWindowShouldBeVisible() {
+    await expect(this.quickTransfer.tooltip.modal).toBeVisible({
+      timeout: 10000,
+    });
   }
 }

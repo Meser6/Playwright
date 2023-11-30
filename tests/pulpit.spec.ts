@@ -1,10 +1,10 @@
 import { test } from "@playwright/test";
-import { PageMenager } from "../test-pages/pagesMenager";
+import { PageMenager } from "../test-pages/pagesMenager.setup";
 import { pages } from "../test-data/pages.data";
 import {
   AvailablePayees,
   AvailablePhoneNumbers,
-} from "../test-pages/pages/pulpitPage";
+} from "../test-pages/pages/pulpit.page";
 
 let pm: PageMenager;
 

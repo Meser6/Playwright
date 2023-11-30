@@ -1,5 +1,5 @@
 import { expect } from "playwright/test";
-import { BasePageNotLogged } from "../basePageNotLogged";
+import { BasePageNotLogged } from "../baseNotLogged.page.setup";
 
 export class LoginPage extends BasePageNotLogged {
   /* locators */

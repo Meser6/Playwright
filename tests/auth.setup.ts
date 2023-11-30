@@ -1,5 +1,5 @@
 import { test as setup } from "@playwright/test";
-import { PageMenager } from "../test-pages/pagesMenager";
+import { PageMenager } from "../test-pages/pagesMenager.setup";
 import { pages } from "../test-data/pages.data";
 
 let pm: PageMenager;
@@ -18,9 +18,9 @@ setup.beforeEach(async ({ page }) => {
 setup("Logged as normal user", async ({ page }) => {
   await pm.loginPage.setupLoginAs(process.env.ID!, process.env.PASSWORD!);
   await pm.pulpitPage.logoutButtonShouldBeVisible();
-  await page.context().storageState({ path: "./.auth/authSession.json" });
+  await page.context().storageState({ path: "./.auth/auth.session.json" });
 });
 
 setup("Not logged user", async ({ page }) => {
-  await page.context().storageState({ path: "./.auth/notAuthSession.json" });
+  await page.context().storageState({ path: "./.auth/notAuth.session.json" });
 });

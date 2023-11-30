@@ -1,4 +1,4 @@
-import { BasePage } from "./basePage";
+import { BasePage } from "./base.page.setup";
 import { expect } from "@playwright/test";
 
 type MenuCategory = keyof typeof BasePageLogged.prototype.menu;
@@ -58,15 +58,15 @@ export class BasePageLogged extends BasePage {
     return Math.floor(Number(minutes) * 60 + Number(seconds));
   }
 
-  async logoutButtonShouldBeVisible() {
-    await expect(this.header.logoutButton).toBeVisible();
-  }
-
   async logout() {
     await this.header.logoutButton.click();
   }
 
   /* asserations */
+  async logoutButtonShouldBeVisible() {
+    await expect(this.header.logoutButton).toBeVisible();
+  }
+
   async userShouldBeLogged() {
     await expect(this.header.logoutButton).toBeVisible();
     await expect(this.bodyHeader.userName).toBeVisible();

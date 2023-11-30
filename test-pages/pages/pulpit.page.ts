@@ -1,4 +1,4 @@
-import { BasePageLogged } from "../basePageLogged";
+import { BasePageLogged } from "../baseLogged.page.setup";
 import { expect } from "@playwright/test";
 
 export type AvailablePayees =

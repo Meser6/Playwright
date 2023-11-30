@@ -16,8 +16,8 @@ setup.beforeEach(async ({ page }) => {
  */
 
 setup("Logged as normal user", async ({ page }) => {
-  await pm.loginPage.setupLoginAs(process.env.ID!, process.env.PASSWORD!);
-  await pm.pulpitPage.logoutButtonShouldBeVisible();
+  await pm.setupLoginAs(process.env.ID!, process.env.PASSWORD!);
+  await pm.pulpitPage.userShouldBeLogged();
   await page.context().storageState({ path: "./.auth/auth.session.json" });
 });
 

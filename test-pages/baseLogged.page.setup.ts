@@ -9,7 +9,6 @@ export class BasePageLogged extends BasePage {
   readonly header = {
     logoutButton: this.page.getByTestId("logout-button"),
   };
-
   readonly bodyHeader = {
     userName: this.page.getByTestId("user-name"),
     messages: this.page.getByTestId("message-text"),
@@ -18,7 +17,6 @@ export class BasePageLogged extends BasePage {
       seconds: this.page.locator("#countdown_seconds"),
     },
   };
-
   readonly menu = {
     pulpit: {
       pulpit: this.page.locator("#pulpit_btn"),

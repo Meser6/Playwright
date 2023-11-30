@@ -11,7 +11,6 @@ let pm: PageMenager;
 test.beforeEach(async ({ page }) => {
   pm = new PageMenager(page);
   await page.goto(pages.pulpit);
-  await pm.pulpitPage.chooseCategoryAtMenu("pulpit");
 });
 
 test.describe("Pulpit page", () => {
@@ -42,6 +41,7 @@ test.describe("Pulpit page", () => {
       await pm.pulpitPage.tooltipWindowShouldBeVisible();
     });
   });
+
   test("Phone Recharge", async () => {
     const reciver: AvailablePhoneNumbers = "500 xxx xxx";
     const amount = 21;

@@ -41,7 +41,6 @@ export class PulpitPage extends BasePageLogged {
     },
     submitButton: this.page.locator("button", { hasText: "wykonaj" }),
   };
-
   readonly phoneRecharge = {
     receiver: {
       selector: this.page.locator("#widget_1_topup_receiver"),
@@ -58,7 +57,6 @@ export class PulpitPage extends BasePageLogged {
     },
     submitButton: this.page.locator("#execute_phone_btn"),
   };
-
   readonly financeMenager = {
     timeSelector: this.page.locator(
       'select[data-classes*="widget-financial-manager-select"]'
@@ -68,7 +66,6 @@ export class PulpitPage extends BasePageLogged {
     ),
     lineCircles: this.page.locator(".widget-financial-manager circle"),
   };
-
   readonly confirmModalWindow = this.page.locator("div.ui-dialog");
 
   /* functions */
@@ -101,7 +98,6 @@ export class PulpitPage extends BasePageLogged {
     );
     await this.quickTransfer.submitButton.click();
   }
-
   async showQuickTransferTooltip() {
     await this.quickTransfer.tooltip.icon.hover({ force: true });
   }
@@ -151,7 +147,6 @@ export class PulpitPage extends BasePageLogged {
   async confirmModalWindowShouldBeVisible() {
     await expect(this.confirmModalWindow).toBeVisible();
   }
-
   async confirmModalWindowShouldContainsTexts(...texts: string[]) {
     const textsAtModalWindow = await this.confirmModalWindow.allTextContents();
     for (const text of texts) {

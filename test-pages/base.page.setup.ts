@@ -51,6 +51,8 @@ export class BasePage {
     await expect.soft(input).toHaveCSS("border-color", color);
   }
 
+  /* It will be try to find cookie with isLogged name and true value
+   * If that cookie exist - user is still logged */
   async atCookiesShouldBeCookieAboutCorrectLogin(shouldBe: boolean) {
     const cookies = await this.page.context().cookies();
     const atCookiesIsCookieAboutCorrectLogin = cookies.some(

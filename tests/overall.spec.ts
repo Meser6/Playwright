@@ -7,7 +7,6 @@ let pm: PageMenager;
 test.beforeEach(async ({ page }) => {
   pm = new PageMenager(page);
   await page.goto(pages.pulpit);
-  await pm.pulpitPage.chooseCategoryAtMenu("pulpit");
 });
 
 test.describe("Session timer", () => {

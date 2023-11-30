@@ -19,16 +19,6 @@ export class LoginPage extends BasePageNotLogged {
   async clickSubmitButton() {
     await this.login.submitButton.click();
   }
-  /**
-   * Function to login in auth.setup. Use data from .env
-   * @param id - proscess.env.ID
-   * @param password - proscess.env.PASSWORD
-   */
-  async setupLoginAs(id: string, password: string) {
-    await this.login.id.input.fill(id);
-    await this.login.password.input.fill(password);
-    await this.login.submitButton.click();
-  }
 
   async userShouldBeNotLogged() {
     await expect(this.login.id.input).toBeVisible();

@@ -10,7 +10,7 @@ export type UploadAnnualReportFileType = "txt" | "json";
 export class ReportsPage extends BasePageLogged {
   /* locators */
 
-  readonly annualRaport = {
+  protected readonly annualRaport = {
     download: {
       txt: this.page
         .locator("#widget_topup_1")

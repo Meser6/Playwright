@@ -5,8 +5,7 @@ export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: 2,
-
+  retries: process.env.CI ? 2 : 0,
   reporter: "html",
   use: {
     baseURL: "https://demo-bank.vercel.app",

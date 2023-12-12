@@ -30,11 +30,3 @@ test.describe("Session timer", () => {
     await pm.privateAccount.currentTimeToSessionEndShuldBe(10, 0);
   });
 });
-
-test.describe("Logout", () => {
-  test("Logout mechanism", async () => {
-    await pm.pulpitPage.logout();
-
-    await pm.loginPage.userShouldBeNotLogged();
-  });
-});

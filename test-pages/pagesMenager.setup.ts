@@ -25,8 +25,7 @@ export class PageMenager {
    * @param password - proscess.env.PASSWORD
    */
   async setupLoginAs(id: string, password: string) {
-    await this.loginPage.login.id.input.fill(id);
-    await this.loginPage.login.password.input.fill(password);
-    await this.loginPage.login.submitButton.click();
+    await this.loginPage.fillLoginForm(id, password);
+    await this.loginPage.clickSubmitButton();
   }
 }

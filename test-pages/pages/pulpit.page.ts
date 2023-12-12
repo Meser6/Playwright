@@ -15,12 +15,12 @@ export type AvailablePhoneNumbers =
 
 export class PulpitPage extends BasePageLogged {
   /* locators */
-  readonly accountDetailsContainer = {
+  protected readonly accountDetailsContainer = {
     moneyValue: this.page.locator("#money_value"),
     decimalValue: this.page.locator("#decimal_value"),
   };
 
-  readonly quickTransfer = {
+  protected readonly quickTransfer = {
     payee: {
       selector: this.page.locator('select[id*="transfer_receive"]'),
       choosedValue: this.page
@@ -42,7 +42,7 @@ export class PulpitPage extends BasePageLogged {
     },
     submitButton: this.page.locator("button", { hasText: "wykonaj" }),
   };
-  readonly phoneRecharge = {
+  protected readonly phoneRecharge = {
     receiver: {
       selector: this.page.locator("#widget_1_topup_receiver"),
       choosedValue: this.page.locator("#widget_1_topup_receiver").locator(".."),
@@ -58,7 +58,7 @@ export class PulpitPage extends BasePageLogged {
     },
     submitButton: this.page.locator("#execute_phone_btn"),
   };
-  readonly financeMenager = {
+  protected readonly financeMenager = {
     timeSelector: this.page.locator(
       'select[data-classes*="widget-financial-manager-select"]'
     ),
@@ -67,7 +67,7 @@ export class PulpitPage extends BasePageLogged {
     ),
     lineCircles: this.page.locator(".widget-financial-manager circle"),
   };
-  readonly confirmModalWindow = this.page.locator("div.ui-dialog");
+  protected readonly confirmModalWindow = this.page.locator("div.ui-dialog");
 
   /* functions */
   async getCurrentAccountBalance() {

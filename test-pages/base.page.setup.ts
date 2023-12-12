@@ -8,7 +8,7 @@ export class BasePage {
   /* functions */
 
   /** Enters the input, sends the value, and exits the input */
-  async typeInInput(inputElement: Locator, value: string) {
+  protected async typeInInput(inputElement: Locator, value: string) {
     await inputElement.click();
     if (value) await inputElement.fill(value);
     await inputElement.blur();
@@ -17,7 +17,7 @@ export class BasePage {
   /* asserations */
 
   /** Will check the message and its color */
-  async inputShouldHaveErrorMessage(
+  protected async inputShouldHaveErrorMessage(
     errorMessageElement: Locator,
     message: string
   ) {
@@ -35,7 +35,7 @@ export class BasePage {
   }
 
   /** Will check if the message is invisible and inputs border color */
-  async inputShouldNotHaveErrorMessage(
+  protected async inputShouldNotHaveErrorMessage(
     input: Locator,
     errorMessageElement: Locator
   ) {

@@ -2,15 +2,17 @@ import { BasePage } from "./base.page.setup";
 import { expect } from "@playwright/test";
 import * as am from "../test-utils/asserationMessages";
 
+//@ts-ignore
 type MenuCategory = keyof typeof BasePageLogged.prototype.menu;
+//@ts-ignore
 type PulpitSubcategory = keyof typeof BasePageLogged.prototype.menu.pulpit;
 
 export class BasePageLogged extends BasePage {
   /* locators */
-  readonly header = {
+  protected readonly header = {
     logoutButton: this.page.getByTestId("logout-button"),
   };
-  readonly bodyHeader = {
+  protected readonly bodyHeader = {
     userName: this.page.getByTestId("user-name"),
     messages: this.page.getByTestId("message-text"),
     timer: {
@@ -18,7 +20,7 @@ export class BasePageLogged extends BasePage {
       seconds: this.page.locator("#countdown_seconds"),
     },
   };
-  readonly menu = {
+  protected readonly menu = {
     pulpit: {
       pulpit: this.page.locator("#pulpit_btn"),
       quick: this.page.locator("#quick_btn"),

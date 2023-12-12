@@ -1,8 +1,8 @@
 export const login = {
   loginFormIsNotVisible: "Login form is not visible",
   passwordFormIsNotVisible: "Password form is not visible",
-  submitButtonIsDisabled: "Submit button is disabled",
-  submitButtonIsNotDisabled: "Submit button is not disabled",
+  submitButtonIsDisabled: "Submit login button is disabled",
+  submitButtonIsNotDisabled: "Submit login button is not disabled",
 };
 
 export const form = {

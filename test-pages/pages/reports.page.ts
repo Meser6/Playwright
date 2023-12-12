@@ -2,6 +2,7 @@ import { BasePageLogged } from "../baseLogged.page.setup";
 import { downloadFile } from "../../test-utils/downloadFiles.utils";
 import { uploadFile } from "../../test-utils/uploadFiles.utils";
 import { expect } from "@playwright/test";
+import * as am from "../../test-utils/asserationMessages";
 
 export type DownloadAnnualReportFileType = "txt" | "zip";
 export type UploadAnnualReportFileType = "txt" | "json";
@@ -55,8 +56,9 @@ export class ReportsPage extends BasePageLogged {
     fileName: string,
     fileType: UploadAnnualReportFileType
   ) {
-    expect(await this.annualRaport.upload[fileType].fileName.innerText()).toBe(
-      `${fileName}.${fileType}`
-    );
+    expect(
+      await this.annualRaport.upload[fileType].fileName.innerText(),
+      am.file.fileIsNotUploated
+    ).toBe(`${fileName}.${fileType}`);
   }
 }

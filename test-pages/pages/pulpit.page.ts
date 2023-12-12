@@ -1,5 +1,6 @@
 import { BasePageLogged } from "../baseLogged.page.setup";
 import { expect } from "@playwright/test";
+import * as am from "../../test-utils/asserationMessages";
 
 export type AvailablePayees =
   | "Jan Demobankowy"
@@ -122,7 +123,8 @@ export class PulpitPage extends BasePageLogged {
     if (confirmReulations) {
       await this.phoneRecharge.confirmReulations.checker.check();
       await expect(
-        this.phoneRecharge.confirmReulations.errorMessage
+        this.phoneRecharge.confirmReulations.errorMessage,
+        am.form.errorMessageIsVisible
       ).not.toBeVisible();
       await this.phoneRecharge.submitButton.click();
     }
@@ -141,27 +143,40 @@ export class PulpitPage extends BasePageLogged {
     balanceBefore: number
   ) {
     const balanceAfter = await this.getCurrentAccountBalance();
-    expect(balanceAfter).toEqual(balanceBefore - transferAmout);
+    expect(balanceAfter, am.balance.balanceIsNotCorrect).toEqual(
+      balanceBefore - transferAmout
+    );
   }
 
   async confirmModalWindowShouldBeVisible() {
-    await expect(this.confirmModalWindow).toBeVisible();
+    await expect(
+      this.confirmModalWindow,
+      am.modalWindow.isNotVisible
+    ).toBeVisible();
   }
   async confirmModalWindowShouldContainsTexts(...texts: string[]) {
     const textsAtModalWindow = await this.confirmModalWindow.allTextContents();
     for (const text of texts) {
-      expect(textsAtModalWindow[0]).toContain(text);
+      expect(textsAtModalWindow[0], am.modalWindow.haveWrongText).toContain(
+        text
+      );
     }
   }
 
   async atChartShouldBeXCircles(circlesAmount: number) {
     await this.financeMenager.chart.hover({ force: true });
 
-    await expect(this.financeMenager.lineCircles).toHaveCount(circlesAmount);
+    await expect(
+      this.financeMenager.lineCircles,
+      am.pulpitChart.atChatIsInncorrectCirclesAmout
+    ).toHaveCount(circlesAmount);
   }
 
   async tooltipWindowShouldBeVisible() {
-    await expect(this.quickTransfer.tooltip.modal).toBeVisible({
+    await expect(
+      this.quickTransfer.tooltip.modal,
+      am.tooltip.isNotVisible
+    ).toBeVisible({
       timeout: 10000,
     });
   }

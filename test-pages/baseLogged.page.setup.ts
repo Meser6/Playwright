@@ -1,5 +1,6 @@
 import { BasePage } from "./base.page.setup";
 import { expect } from "@playwright/test";
+import * as am from "../test-utils/asserationMessages";
 
 type MenuCategory = keyof typeof BasePageLogged.prototype.menu;
 type PulpitSubcategory = keyof typeof BasePageLogged.prototype.menu.pulpit;
@@ -62,12 +63,18 @@ export class BasePageLogged extends BasePage {
 
   /* asserations */
   async logoutButtonShouldBeVisible() {
-    await expect(this.header.logoutButton).toBeVisible();
+    await expect(
+      this.header.logoutButton,
+      am.loggedHeader.logoutButtonIsNotVisible
+    ).toBeVisible();
   }
 
   async userShouldBeLogged() {
-    await expect(this.header.logoutButton).toBeVisible();
-    await expect(this.bodyHeader.userName).toBeVisible();
+    await this.logoutButtonShouldBeVisible();
+    await expect(
+      this.bodyHeader.userName,
+      am.loggedHeader.usserNameIsNotVisible
+    ).toBeVisible();
 
     await this.atCookiesShouldBeCookieAboutCorrectLogin(true);
   }
@@ -79,13 +86,20 @@ export class BasePageLogged extends BasePage {
   ) {
     const currentTime = await this.getCurrentTimeToSessnionEnd();
     exactValue
-      ? expect(currentTime).toBe(timeBefore - difference!)
-      : expect(currentTime).toBeLessThan(timeBefore);
+      ? expect(currentTime, am.loggedHeader.timerNotWorking).toBe(
+          timeBefore - difference!
+        )
+      : expect(currentTime, am.loggedHeader.timerNotWorking).toBeLessThan(
+          timeBefore
+        );
   }
 
   async currentTimeToSessionEndShuldBe(minutes: number, seconds: number) {
     const timeInSeconds = Math.floor(Number(minutes) * 60 + Number(seconds));
 
-    expect(await this.getCurrentTimeToSessnionEnd()).toBe(timeInSeconds);
+    expect(
+      await this.getCurrentTimeToSessnionEnd(),
+      am.loggedHeader.timerNotWorking
+    ).toBe(timeInSeconds);
   }
 }

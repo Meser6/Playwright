@@ -1,6 +1,7 @@
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { PageMenager } from "../test-pages/pagesMenager.setup";
 import { pages } from "../test-data/pages.data";
+import * as am from "../test-utils/asserationMessages";
 
 let pm: PageMenager;
 
@@ -83,6 +84,6 @@ test.describe("Login page", () => {
       pm.loginPage.login.password.errorMessage,
       errorMessage
     );
-    await pm.loginPage.submitButtonShouldBeDisabled();
+    await pm.loginPage.submitButtonShouldNotBeDisabled();
   });
 });

@@ -1,6 +1,7 @@
 import { Page } from "playwright-core";
 import { Locator, expect } from "@playwright/test";
 import { FormValidationColors } from "../test-data/colors.data";
+import * as am from "../test-utils/asserationMessages";
 
 export class BasePage {
   constructor(readonly page: Page) {}
@@ -20,12 +21,17 @@ export class BasePage {
     errorMessageElement: Locator,
     message: string
   ) {
-    await expect(errorMessageElement).toBeVisible();
+    await expect(
+      errorMessageElement,
+      am.form.errorMessageIsNotVisible
+    ).toBeVisible();
     await this.errorMessageShouldHaveColor(
       errorMessageElement,
       FormValidationColors.RED
     );
-    await expect.soft(errorMessageElement).toHaveText(message);
+    await expect
+      .soft(errorMessageElement, am.form.errorMessageHaveWrongText)
+      .toHaveText(message);
   }
 
   /** Will check if the message is invisible and inputs border color */
@@ -33,7 +39,10 @@ export class BasePage {
     input: Locator,
     errorMessageElement: Locator
   ) {
-    await expect(errorMessageElement).not.toBeVisible();
+    await expect(
+      errorMessageElement,
+      am.form.errorMessageIsVisible
+    ).not.toBeVisible();
     await this.inputBorderShouldHaveColor(input, FormValidationColors.GREEN);
   }
 
@@ -41,14 +50,18 @@ export class BasePage {
     errorMessageElement: Locator,
     color: FormValidationColors
   ) {
-    await expect.soft(errorMessageElement).toHaveCSS("border-color", color);
+    await expect
+      .soft(errorMessageElement, am.form.errorMessageHaveWrongColor)
+      .toHaveCSS("border-color", color);
   }
 
   private async inputBorderShouldHaveColor(
     input: Locator,
     color: FormValidationColors
   ) {
-    await expect.soft(input).toHaveCSS("border-color", color);
+    await expect
+      .soft(input, am.form.inpitBorderHaveWrongColor)
+      .toHaveCSS("border-color", color);
   }
 
   /* It will be try to find cookie with isLogged name and true value
@@ -59,6 +72,11 @@ export class BasePage {
       (cookie) => cookie.name === "isLogged" && cookie.value === "true"
     );
 
-    expect(atCookiesIsCookieAboutCorrectLogin).toBe(shouldBe);
+    expect(
+      atCookiesIsCookieAboutCorrectLogin,
+      shouldBe
+        ? am.cookie.atCookiesIsNotCookieAboutCorrectLogin
+        : am.cookie.atCookiesIsCookieAboutCorrectLogin
+    ).toBe(shouldBe);
   }
 }
